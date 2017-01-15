@@ -1,0 +1,61 @@
+{
+  "name": "hm-webui-javascript",
+  "version": "0.0.1",
+  "description": "A hm-webui plugin to run javascript / coffescript code",
+  "keywords": [
+    "hm-webui",
+    "hm-webui-plugin",
+    "Javascript",
+    "scripting"
+  ],
+  "author": "paspat",
+  "contributors": [
+    "paspat"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hm-webui/hm-webui-javascript.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "coffee-script": "^1.11.1",
+    "extend": "^3.0.0",
+    "node-schedule": "^1.1.0",
+    "node-uuid": "^1.4.7",
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "dependency-check": "^2.6.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0"
+  },
+  "jshintConfig": {
+    "eqnull": true,
+    "unused": true,
+    "undef": true,
+    "node": true
+  },
+  "hmWebUI": {
+      "icon": "javascript.png",
+      "type": [
+          "script",
+          "eventreceiver",
+          "daemon",
+          "pluginmanager"
+      ],
+      "parameter": {
+          "language": {
+            "type": "select",
+            "required": true,
+            "label": "Script language",
+            "help": "Select the language to use for scripting",
+            "defaultValue": "javascript",
+            "values": {
+              "javascript": "Javascript",
+              "coffeescript": "Coffescript"
+            }
+          }
+      }
+  }
+}
