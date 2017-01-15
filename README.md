@@ -78,14 +78,14 @@ hmwebui.getPlugins('device').then(function(result){
 
 The getPlugins function is returning a list of configured plugins.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 type | string | no | returning all plugins with the given type
 status | string | no | possible values: starting, running, stopping, stopped
 
-**Result**
+**_Result_**
 
 An object with plugin data.
 ```
@@ -97,7 +97,7 @@ An object with plugin data.
 }
 ```
 
-**Example**
+**_Example_**
 
 ```js
 hmwebui.getPlugins('device').then(function(plugins){
@@ -123,19 +123,19 @@ The callPluginFunction is used to call a function of a configured plugin.
 It depends on the plugin function how many arg[n] parameter you have to provide.
 See the documentation of the plugin to see which functions you can call.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 pluginId | string | yes | the id of the plugin to call the function (can be retrieved with the getPluginsFunction or is visible in the plugin list of the Admin GUI)
 functionName | string | yes | the name of the function to call
 arg[n] | any | no | the arguments to call the function (read plugin documentation)
 
-**Result**
+**_Result_**
 
 Depends on the plugin function (read plugin documentation for details)
 
-**Example**
+**_Example_**
 
 ```js
 //call the get function of the httprequest plugin
@@ -158,13 +158,13 @@ hmwebui.callPluginFunction('hm-webui-httprequest.0','get','http://www.google.com
 
 This function returns a list of devices matching the given selector
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 selector | string | no | the selector to match the devices (for detailed description see below). If no selector is given all devices are returned
 
-**Selector parameter**
+**_Selector parameter_**
 
 The selector parameter is a string to match the devices. Right now you can match
 device attributes. All attributes are combined with a AND condition. The selector should be in the following format:
@@ -175,11 +175,11 @@ device attributes. All attributes are combined with a AND condition. The selecto
 
 As attribute value you could provide a string or a regular expression to match a device attribute.
 
-**Result**
+**_Result_**
 
 An array list containing all matched device objects.
 
-**Example**
+**_Example_**
 
 ```js
 //get a list of devices where the type attribute is 'Window'or 'Door'
@@ -200,13 +200,13 @@ hmwebui.getDeviceList([type=/Window|Door/][pluginId='hm-webui-homematic.0']).the
 
 This function returns a device object.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 pluginId | string | no | the id of the plugin to get the device (can be retrieved with the getPluginsFunction or is visible in the plugin list of the Admin GUI).<br>If no pluginId is provided all plugins will be queried for the given address.
 
-**Result**
+**_Result_**
 
 An object with the device data
 
@@ -226,7 +226,7 @@ An object with the device data
 }
 ```
 
-**Example**
+**_Example_**
 
 ```js
 //get the device data for address 'MEQ32546'
@@ -247,14 +247,14 @@ hmwebui.getDevice('hm-webui-homematic.0','MEQ32546').then(function(device){
 With this function you can retrieve one or multiple state value(s)
 (depends on the address parameter).
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 pluginId | string | no | the id of the plugin to call the function (can be retrieved with the getPluginsFunction or is visible in the plugin list of the Admin GUI).<br>If no pluginId is provided all plugins will be queried for the given address.
 address | string <br> array <br> object | yes | for detailed description see below
 
-**Address parameter**
+**_Address parameter_**
 
 If the address is a string it should have the following
 format:
@@ -287,7 +287,7 @@ key you gave to the address (see above). For the example above the result will b
 }
 ```
 
-**Example**
+**_Example_**
 
 ```js
 //get a single state value for state address 'MEQ32546.1.STATE'
@@ -329,15 +329,15 @@ hmwebui.getState({
 
 With this function you can set one or state value for the provided address.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 pluginId | string | no | the id of the plugin to call the function (can be retrieved with the getPluginsFunction or is visible in the plugin list of the Admin GUI).<br>If no pluginId is provided all plugins will be queried to set the state for the given address.
 address | string | yes | for detailed description see below
 value | string <br> number <br> boolean | yes | the value to set
 
-**Address parameter**
+**_Address parameter_**
 
 The address is a string and should have the following
 format:
@@ -345,11 +345,11 @@ format:
 <device address>.<channel>.<state>
 ```
 
-**Result**
+**_Result_**
 
 true on success or false on failure
 
-**Example**
+**_Example_**
 
 ```js
 //set the state 'MEQ32546.1.STATE' to true
@@ -368,19 +368,19 @@ hmwebui.setState('hm-webui-homematic.0','MEQ32546.1.STATE',0).then(function(resu
 #### on(pattern)
 With this function you add a subscription to a state event defined by the given pattern.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 pattern | object | yes | a pattern object to define the sate event to subscribe (for detailed description see below / Object matcher)
 
-**Object matcher**
+**_Object matcher_**
 
 You have to provide an object (key / value pairs) as pattern with the following
 possible parameter.
 
 key | type | comment
--|-|-
+---|---|---
 logic | string | logic to combine the condition keys. Possible values are <br>**and** (default) <br>**or**
 change | string | possible values are <br> **ne** (default) - (not equal) New value must be not equal to the old one (value != oldState.value) <br> **eq** - (equal) New value must be equal to old one (value == oldState.value) <br> **gt** - (greater than) New value must be greater than old value (value > oldState.value) <br> **ge** - (greater or equal) New value must be greater or equal to old one (value >= oldState.value) <br> **lt** - (lower than) New value must be lower than old one (value < oldState.value) <br> **le** - (lower or equal) New value must be lower or equal to old value (value <= oldState.value)
 val | any | New value must be equal to the given value
@@ -401,7 +401,7 @@ channel | string <br> RegExp | The channel of the event must match the given str
 pluginId | string <br> RegExp | The pluginId of the event must match the given string or regular expression. <br><br> The string can have a \* at the beginning and/or end e.g. <br> hm-webui\*  - to match all pluginIds beginning with hm-webui <br> \*httprequest - to match all pluginIds ending with httprequest
 device | object | a object to match device values of the event with the following keys: <br>**name** - a string or RegExp. The device name of the event must match the given name <br>**type** - a string or RegExp. The device type of the event must match the given type
 
-**Result**
+**_Result_**
 
 The result is an event object. It depends on the device plugin what kind of information is provided for the event but at least the following fields should be in the object:
 
@@ -417,7 +417,7 @@ The result is an event object. It depends on the device plugin what kind of info
 }
 ```
 
-**Example**
+**_Example_**
 
 ```js
 //match all events where the state starts with STA* and the device type matches the given regular expression
@@ -447,15 +447,15 @@ Alias for the [on(pattern)](#on-pattern-) function
 
 Schedule a function to run on the given pattern.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 pattern | string <br> object | yes | see Cron expression and Object expression below for details
 
 For more details on the expressions visit the [nodejs-schedule project page](https://github.com/node-schedule/node-schedule)
 
-**Cron expression**
+**_Cron expression_**
 
 The pattern can be a cron expression in the following format
 ```
@@ -476,7 +476,7 @@ hmwebui.schedule('*/5 * * * *').then(function(){
 });
 ```
 
-**Object expression**
+**_Object expression_**
 
 To make things a little easier, an object expression is also supported.
 
@@ -486,7 +486,7 @@ hmwebui.schedule({hour: 14, minute: 30, dayOfWeek: 0}).then(function(){
 });
 ```
 
-**Returns**
+**_Returns_**
 
 As all other functions the schedule function returns a promise with .then() .fail()
 and .fin() functions. But ist also has a scheduler property holding the instance of the schedule.
@@ -505,17 +505,17 @@ sched.scheduler.cancel()
 
 Execute a command on the system HM WebUi is running on.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 cmd | string | yes | the command to execute e.g. <br> ls /var/log - to list files in the /var/log directory
 
-**Result**
+**_Result_**
 
 the ouput of the system command
 
-**Example**
+**_Example_**
 
 ```js
 hmwebui.exec('ls /var/log').then(function(result){
@@ -529,14 +529,14 @@ hmwebui.exec('ls /var/log').then(function(result){
 
 Write an data to the config store of the plugin instance.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 file | string | yes | the filename of the config file to write to
 data | object | yes | the object data to write to the config stopServer
 
-**Example**
+**_Example_**
 
 ```js
 hmwebui.writeConfigJSON('test.json',{id: 1, name: 'Test'}).then(function(){
@@ -550,17 +550,17 @@ hmwebui.writeConfigJSON('test.json',{id: 1, name: 'Test'}).then(function(){
 
 Read a JSON object from the config store of the plugin instance.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 file | string | yes | the filename of the config file to read
 
-**Result**
+**_Result_**
 
 a JSON object from the config file
 
-**Example**
+**_Example_**
 
 ```js
 hmwebui.readConfigJSON('test.json').then(function(result){
@@ -584,13 +584,13 @@ To avoid confusion on an error put the importScript() function always at the end
 of the main code (the line numbers could be different in the error message when you import the
 script in the middle of the code).
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 name | string | yes | the name of the script to import
 
-**Example**
+**_Example_**
 
 ```js
 //import the script 'Test Script' here
@@ -603,14 +603,14 @@ The method calls a function or evaluates an expression at specified intervals (i
 
 For support of the javascript standard setInterval function you can provide as first argument a callback. If you omit the timeout the function is returning a promise that is called after the milliseconds.
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 callback | function | no | the function to execute; as argruments the arg1 ... argN is passed to the function
 ms | integer | yes | the milliseconds to repeat the code
 
-**Returns**
+**_Returns_**
 
 If a callback function is provided it returns the id of the interval. If no callback function is
 provided it returns a promise and the .then() function of the promise is called on every interval. The arguments passed to the .then() function are the arg1 ... argN. The promise also contains a reference to the interval id.
@@ -619,7 +619,7 @@ provided it returns a promise and the .then() function of the promise is called 
 var intervalId = setInterval(10).interval;
 ```
 
-**Example**
+**_Example_**
 
 ```js
 //run the function every 5 seconds
@@ -637,13 +637,13 @@ var intervalId = setInterval(5000).then(function(){
 
 This method deletes an interval
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 intervalId | integer | yes | the the id of the interval returned by the [setInterval](#setinterval-callback-ms-arg1-arg2-argn-) function
 
-**Example**
+**_Example_**
 
 ```js
 //run the function after 5 seconds
@@ -660,14 +660,14 @@ clearInterval(intervalId);
 The method calls a function or evaluates an expression after a specified number of milliseconds.
 For support of the javascript standard setTimeout function you can provide as first argument a callback. If you omit the timeout the function is returning a promise that is called after the milliseconds
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 callback | function | no | the function to execute; as argruments the arg1 ... argN is passed to the function
 ms | integer | yes | the number of milliseconds to wait before executing the code
 
-**Returns**
+**_Returns_**
 
 If a callback function is provided it returns the id of the timeout. If no callback function is
 provided it returns a promise and the .then() function of the promise is called after
@@ -677,7 +677,7 @@ the timeout. The arguments passed to the .then() function are the arg1 ... argN.
 var timeoutId = setTimeout(10).timeout;
 ```
 
-**Example**
+**_Example_**
 
 ```js
 //run the function after 5 seconds
@@ -695,13 +695,13 @@ var timeoutId = setTimeout(5000).then(function(){
 
 This method deletes a timeout
 
-**Parameter**
+**_Parameter_**
 
 name | type | required | comment
--|-|-|-
+---|---|---|---
 timeoutId | integer | yes | the the id of the timeout returned by the [setTimeout](#settimeout-callback-ms-arg1-arg2-argn-) function
 
-**Example**
+**_Example_**
 
 ```js
 //run the function after 5 seconds
